@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Room from "../../components/Room/Room";
-import { Flex, Spinner } from "@chakra-ui/core";
+import { Flex, Spinner, Text } from "@chakra-ui/core";
 import { withRouter } from "react-router-dom";
 import { withFirebase } from "../../components/Firebase/withFirebase";
 import EnterNameForm from "../../components/EnterNameForm/EnterNameForm";
@@ -8,6 +8,7 @@ import EnterNameForm from "../../components/EnterNameForm/EnterNameForm";
 class RoomPage extends Component {
   state = {
     loading: false,
+    roomDoesNotExist: false,
     playerName: this.props.firebase.currentPlayerName(
       this.props.match.params.roomId
     ),
@@ -17,8 +18,18 @@ class RoomPage extends Component {
   };
 
   componentDidMount() {
+    this.checkIfRoomExists();
     if (this.state.playerName) this.enterRoomHandler(this.state.playerName);
   }
+
+  checkIfRoomExists = () => {
+    this.setState({ loading: true });
+    this.props.firebase
+      .doesRoomExist(this.props.match.params.roomId)
+      .then(exists =>
+        this.setState({ roomDoesNotExist: !exists, loading: false })
+      );
+  };
 
   enterRoomHandler = playerName => {
     this.setState({ loading: true });
@@ -36,8 +47,17 @@ class RoomPage extends Component {
   render() {
     if (this.state.loading) {
       return (
-        <Flex width="50px" m="200px auto" textAlign="center">
+        <Flex width="50px" m="200px auto">
           <Spinner size="xl" color="white" />
+        </Flex>
+      );
+    }
+    if (this.state.roomDoesNotExist) {
+      return (
+        <Flex width="80%" m="200px auto" justifyContent="center">
+          <Text fontSize="2xl" color="white" fontWeight="bold">
+            this room does not exist, sorry
+          </Text>
         </Flex>
       );
     }

@@ -34,6 +34,18 @@ class Firebase {
     this.localStorage.setItem(roomId, JSON.stringify({ name: playerName }));
   };
 
+  doesRoomExist = roomId => {
+    return new Promise((resolve, reject) => {
+      this.db
+        .ref("rooms/" + roomId)
+        .once("value")
+        .then(room => {
+          resolve(room.exists());
+        })
+        .catch(err => reject(err));
+    });
+  };
+
   updateCard = (roomId, cardValue) => {
     const currentPlayerId = this.currentPlayerId(roomId);
     return this.db
