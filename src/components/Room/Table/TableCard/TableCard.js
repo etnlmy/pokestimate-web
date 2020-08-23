@@ -21,6 +21,7 @@ const TableCard = props => {
         right={props.right - (props.height * 0.75) / 2}
         borderRadius="3px"
         boxShadow={`2px 2px ${theme.colors.pokerGreen[600]}`}
+        className="tilt-in-fwd-tr"
       >
         {props.value}
       </Box>

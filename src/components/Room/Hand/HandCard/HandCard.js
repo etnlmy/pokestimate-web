@@ -1,7 +1,7 @@
 import React from "react";
 import { PseudoBox, useTheme } from "@chakra-ui/core";
 
-const HandCard = (props) => {
+const HandCard = props => {
   const theme = useTheme();
   const height = 50;
 
