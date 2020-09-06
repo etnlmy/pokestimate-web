@@ -1,33 +1,59 @@
 import React from "react";
 import { Box, useTheme } from "@chakra-ui/core";
+import { CSSTransition } from "react-transition-group";
 
 const TableCard = props => {
   const theme = useTheme();
-  const backgroundColor = props.value ? "white" : "pokerGreen.400";
-  var card = null;
-  if (!props.hide) {
-    card = (
+  const boxShadow = `2px 2px ${theme.colors.pokerGreen[600]}`;
+
+  return (
+    <CSSTransition
+      in={props.visible}
+      timeout={600}
+      classNames="table-card"
+      unmountOnExit
+    >
       <Box
-        textAlign="center"
-        lineHeight={`${props.height}px`}
-        fontSize={`${props.height / 2}px`}
-        position="absolute"
-        fontWeight="bold"
-        color="pokerBlue.700"
+        className="scene"
         w={`${props.height * 0.75}px`}
         h={`${props.height}px`}
-        backgroundColor={backgroundColor}
         top={props.top - props.height / 2}
         right={props.right - (props.height * 0.75) / 2}
-        borderRadius="3px"
-        boxShadow={`2px 2px ${theme.colors.pokerGreen[600]}`}
-        className="tilt-in-fwd-tr"
+        position="absolute"
       >
-        {props.value}
+        <Box
+          className={`table-card ${props.reveal ? "is-flipped" : ""}`}
+          w="100%"
+          h="100%"
+          position="relative"
+        >
+          <Box
+            className="table-card__face table-card__face--front"
+            w="100%"
+            h="100%"
+            backgroundColor="pokerGreen.400"
+            borderRadius="3px"
+            boxShadow={boxShadow}
+          ></Box>
+          <Box
+            className="table-card__face table-card__face--back"
+            w="100%"
+            h="100%"
+            backgroundColor="white"
+            borderRadius="3px"
+            boxShadow={boxShadow}
+            textAlign="center"
+            lineHeight={`${props.height}px`}
+            fontSize={`${props.height / 2}px`}
+            fontWeight="bold"
+            color="pokerBlue.700"
+          >
+            {props.value}
+          </Box>
+        </Box>
       </Box>
-    );
-  }
-  return card;
+    </CSSTransition>
+  );
 };
 
 export default TableCard;

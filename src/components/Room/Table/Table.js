@@ -48,8 +48,9 @@ const Table = props => {
         right={player.avatarCoordinates.x}
       />
       <Card
-        hide={!player.card}
-        value={props.phase === "reveal" ? player.card : null}
+        visible={player.card !== null && player.card !== ""}
+        reveal={props.phase === "reveal"}
+        value={player.card}
         height={40}
         top={player.cardCoordinates.y}
         right={player.cardCoordinates.x}

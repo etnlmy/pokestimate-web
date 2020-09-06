@@ -5,6 +5,28 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.scene {
+  perspective: 400px;
+}
+
+.table-card {
+  transform-style: preserve-3d;
+  transition: transform 1s;
+}
+
+.table-card-enter-done .table-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.table-card__face {
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+.table-card__face--back {
+  transform: rotateY(180deg);
+}
+
 /**
  * ----------------------------------------
  * animation tilt-in-fwd-tr
@@ -39,7 +61,7 @@ body {
   }
 }
 
-.tilt-in-fwd-tr {
+.table-card-enter-active {
   -webkit-animation: tilt-in-fwd-tr 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)
     both;
   animation: tilt-in-fwd-tr 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
@@ -79,7 +101,7 @@ body {
   }
 }
 
-.tilt-out-fwd-tr {
+.table-card-exit-active {
   -webkit-animation: tilt-out-fwd-tr 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)
     both;
   animation: tilt-out-fwd-tr 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
