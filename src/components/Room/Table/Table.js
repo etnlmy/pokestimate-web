@@ -1,7 +1,8 @@
 import React from "react";
-import { Box, Button, useTheme } from "@chakra-ui/core";
+import { Flex, useTheme } from "@chakra-ui/core";
 import Player from "./Player/Player";
 import Card from "../Table/TableCard/TableCard";
+import NextRoundButton from "./NextRoundButton/NextRoundButton";
 
 const Table = props => {
   const theme = useTheme();
@@ -58,25 +59,8 @@ const Table = props => {
     </div>
   ));
 
-  const nextRoundButton = (
-    <Button
-      position="absolute"
-      onClick={props.onNextRound}
-      size="lg"
-      top="50%"
-      left="50%"
-      fontWeight="bold"
-      transform="translate(-50%, -50%);"
-      color="pokerBlue.700"
-      boxShadow={`3px 3px ${theme.colors.pokerGreen[600]}`}
-      _hover={{ boxShadow: `1px 1px ${theme.colors.pokerGreen[600]}` }}
-    >
-      Next round!
-    </Button>
-  );
-
   return (
-    <Box
+    <Flex
       m="auto"
       w={props.width}
       h={props.height}
@@ -85,10 +69,15 @@ const Table = props => {
       borderRadius="200px"
       boxShadow={`4px 5px ${theme.colors.pokerBlue[800]}, inset 3px 5px 0px 1px ${theme.colors.pokerGreen[600]}`}
       position="relative"
+      align="center"
+      justify="center"
     >
-      {props.phase === "reveal" ? nextRoundButton : null}
+      <NextRoundButton
+        visible={props.phase === "reveal"}
+        onNextRound={props.onNextRound}
+      ></NextRoundButton>
       {playersComponents}
-    </Box>
+    </Flex>
   );
 };
 

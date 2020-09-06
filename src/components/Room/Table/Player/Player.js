@@ -13,6 +13,7 @@ const Player = props => {
 
   return (
     <Avatar
+      className="player"
       size="lg"
       position="absolute"
       top={props.top - 32}
